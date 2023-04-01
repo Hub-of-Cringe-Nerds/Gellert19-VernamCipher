@@ -8,7 +8,8 @@ namespace VernamCipher
 
         static void Main()
         {
-            StreamReader PlainText = new StreamReader("Plain.txt");
+            StreamReader PlainText = new StreamReader("PlainText.txt");
+            StreamWriter EncodedText = new StreamWriter("EncodedText.txt");
             string Message = PlainText.ReadLine()!;
             string Encoded = "";
             int CipherKey = 0;
@@ -20,6 +21,7 @@ namespace VernamCipher
             }
 
             Console.WriteLine(Message);
+            EncodedText.WriteLine(Encoded);
             Console.WriteLine(Encoded);
             Console.ReadLine();
         }
