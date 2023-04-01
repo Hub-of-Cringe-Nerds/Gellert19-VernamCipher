@@ -9,7 +9,8 @@ namespace VernamCipher
         static void Main()
         {
             StreamReader PlainText = new StreamReader("PlainText.txt");
-            StreamWriter EncodedText = new StreamWriter("EncodedText.txt");
+            StreamWriter EncodedText = new StreamWriter("EncodedText.txt", false);
+            EncodedText.AutoFlush = true;
             string Message = PlainText.ReadLine()!;
             string Encoded = "";
             int CipherKey = 0;
@@ -19,11 +20,8 @@ namespace VernamCipher
                 CipherKey = (int)Message[i] + GetRandomNumber(0, 256);
                 Encoded += ((char)CipherKey);
             }
-
-            Console.WriteLine(Message);
+            
             EncodedText.WriteLine(Encoded);
-            Console.WriteLine(Encoded);
-            Console.ReadLine();
         }
 
         private static int GetRandomNumber(int lowerLimitValue, int upperLimitValue)
