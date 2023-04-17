@@ -8,7 +8,7 @@ namespace VernamCipher
 
         static void Main()
         {
-            string textfile = "", choice = "";
+            string inputFile = "", choice = "";
             bool valid = false;
 
             while (!valid)
@@ -17,21 +17,20 @@ namespace VernamCipher
                 choice = Console.ReadLine()!;
                 choice = choice.ToUpper();
 
-                if (choice[0] == 'E')
+                switch (choice[0])
                 {
-                    Console.Write("Please enter the name of the text file that you wish to encode: ");
-                    textfile = Console.ReadLine()!;
-
-                    Encode(textfile);
-                }
-                else if (choice[0] == 'D')
-                {
-                    Console.Write("Please enter the name of the text file that you wish to decode: ");
-                    textfile = Console.ReadLine()!;
-                }
-                else
-                {
-                    Console.WriteLine("Not a valid choice.");
+                    case 'E':
+                        Console.Write("Please enter the name of the file that you wish to encode: ");
+                        inputFile = Console.ReadLine()!;
+                        Encode(inputFile);
+                        break;
+                    case 'D':
+                        Console.Write("Please enter the name of the file that you wish to decode: ");
+                        inputFile = Console.ReadLine()!;
+                        break;
+                    default:
+                        Console.WriteLine("Not a valid choice.");
+                        break;
                 }
             }
 
@@ -39,32 +38,47 @@ namespace VernamCipher
 
         private static void Encode(string textfile)
         {
-            StreamReader PlainText = new StreamReader(textfile);
-            StreamWriter EncodedText = new StreamWriter("EncodedText.txt", false);
-            EncodedText.AutoFlush = true;
+            StreamReader plainText = new StreamReader(textfile);
+            StreamWriter encodedText = new StreamWriter("EncodedText.txt");
+            StreamWriter key = new StreamWriter("Key.txt");
+            key.AutoFlush = true;
+            encodedText.AutoFlush = true;
 
-            string Message = PlainText.ReadToEnd();
-            string Encoded = "";
-            int CipherKey = 0;
+            string message = plainText.ReadToEnd();
+            string encoded = "";
+            char cipherKey = '.';
 
-            for (int i = 0; i < Message.Length; i++)
+            for (int i = 0; i < message.Length; i++)
             {
-                CipherKey = (int)Message[i] + GetRandomNumber(0, 256);
-                Encoded += ((char)CipherKey);
+                cipherKey = (char)(message[i] + GetRandomNumber(0, 256));
+                key.Write(cipherKey);
+                encoded += (cipherKey);
             }
 
-            EncodedText.WriteLine(Encoded);
+            encodedText.WriteLine(encoded);
         }
 
-        private static void Decode(string textfile)
+        private static void Decode(string textFile, string keyFile)
         {
-            StreamReader PlainText = new StreamReader(textfile);
+            StreamReader encodedText = new StreamReader(textFile);
+            StreamReader keyText = new StreamReader(keyFile);
+            StreamWriter decodedText = new StreamWriter("DecodedText.txt");
+            decodedText.AutoFlush = true;
+
+            string encoded = encodedText.ReadToEnd();
+            string key = keyText.ReadToEnd();
+            string decoded = "";
+
+            for (int i = 0; i < encoded.Length; i++)
+            {
+                decoded += (encoded[i] - key[i]);
+            }
         }
 
         private static int GetRandomNumber(int lowerLimitValue, int upperLimitValue)
         {
             return Cipher.Next(lowerLimitValue, upperLimitValue + 1);
         }
-        
+
     }
 }
