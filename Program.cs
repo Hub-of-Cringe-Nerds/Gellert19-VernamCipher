@@ -8,7 +8,7 @@ namespace VernamCipher
 
         static void Main()
         {
-            string inputFile = "", choice = "";
+            string inputFile = "", choice = "", keyFile = "Key.txt";
             bool valid = false;
 
             while (!valid)
@@ -21,12 +21,13 @@ namespace VernamCipher
                 {
                     case 'E':
                         Console.Write("Please enter the name of the file that you wish to encode: ");
-                        inputFile = Console.ReadLine()!;
+                        inputFile = (Console.ReadLine()!) + ".txt";
                         Encode(inputFile);
                         break;
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
-                        inputFile = Console.ReadLine()!;
+                        inputFile = (Console.ReadLine()!) + ".txt";
+                        Decode(inputFile, keyFile);
                         break;
                     default:
                         Console.WriteLine("Not a valid choice.");
@@ -54,8 +55,10 @@ namespace VernamCipher
                 key.Write(cipherKey);
                 encoded += (cipherKey);
             }
+            key.Close();
 
             encodedText.WriteLine(encoded);
+            encodedText.Close();
         }
 
         private static void Decode(string textFile, string keyFile)
@@ -69,10 +72,13 @@ namespace VernamCipher
             string key = keyText.ReadToEnd();
             string decoded = "";
 
-            for (int i = 0; i < encoded.Length; i++)
+            for (int i = 0; i < encoded.Length - 1; i++)
             {
                 decoded += (encoded[i] - key[i]);
             }
+
+            decodedText.WriteLine(decoded);
+            decodedText.Close();
         }
 
         private static int GetRandomNumber(int lowerLimitValue, int upperLimitValue)
