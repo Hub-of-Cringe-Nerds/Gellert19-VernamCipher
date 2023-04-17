@@ -15,7 +15,7 @@ namespace VernamCipher
             {
                 Console.Write("Do you wish to encode (E) a text file or decode (D): ");
                 choice = Console.ReadLine()!;
-                choice.ToUpper();
+                choice = choice.ToUpper();
 
                 if (choice[0] == 'E')
                 {
@@ -42,7 +42,8 @@ namespace VernamCipher
             StreamReader PlainText = new StreamReader(textfile);
             StreamWriter EncodedText = new StreamWriter("EncodedText.txt", false);
             EncodedText.AutoFlush = true;
-            string Message = PlainText.ReadLine()!;
+
+            string Message = PlainText.ReadToEnd();
             string Encoded = "";
             int CipherKey = 0;
 
