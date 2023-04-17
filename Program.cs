@@ -9,22 +9,30 @@ namespace VernamCipher
         static void Main()
         {
             string textfile = "", choice = "";
+            bool valid = false;
 
-            Console.Write("Do you wish to encode (E) a text file or decode (D): ");
-            choice = Console.ReadLine()!;
-            choice.ToUpper();
-
-            if(choice[0] == 'E')
+            while (!valid)
             {
-                Console.Write("Please enter the name of the text file that you wish to encode: ");
-                textfile = Console.ReadLine()!;
+                Console.Write("Do you wish to encode (E) a text file or decode (D): ");
+                choice = Console.ReadLine()!;
+                choice.ToUpper();
 
-                Encode(textfile);
-            }
-            else if(choice[0] == 'D')
-            {
-                Console.Write("Please enter the name of the text file that you wish to decode: ");
-                textfile = Console.ReadLine()!;
+                if (choice[0] == 'E')
+                {
+                    Console.Write("Please enter the name of the text file that you wish to encode: ");
+                    textfile = Console.ReadLine()!;
+
+                    Encode(textfile);
+                }
+                else if (choice[0] == 'D')
+                {
+                    Console.Write("Please enter the name of the text file that you wish to decode: ");
+                    textfile = Console.ReadLine()!;
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid choice.");
+                }
             }
 
         }
