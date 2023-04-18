@@ -55,7 +55,6 @@ namespace VernamCipher
                 key.Write(cipherKey);
                 encoded += (char)((int)cipherKey[i] + (int)(message[i]));
             }
-            Console.WriteLine(message.Length);
             key.Close();
 
             encodedText.WriteLine(encoded);
@@ -75,9 +74,7 @@ namespace VernamCipher
 
             for (int i = 0; i < encoded.Length - 1; i++)
             {
-                //decoded += (char)((int)encoded[i] - (int)key[i]);
-                Console.WriteLine(encoded.Length);
-                Console.WriteLine(key.Length);
+                decoded += (char)((int)encoded[i] - (int)key[i]);
             }
 
             decodedText.WriteLine(decoded);
