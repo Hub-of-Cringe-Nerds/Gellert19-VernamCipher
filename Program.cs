@@ -47,14 +47,15 @@ namespace VernamCipher
 
             string message = plainText.ReadToEnd();
             string encoded = "";
-            char cipherKey = '.';
+            string cipherKey = "";
 
             for (int i = 0; i < message.Length; i++)
             {
-                cipherKey = (char)(message[i] + GetRandomNumber(0, 256));
+                cipherKey += (char)GetRandomNumber(0, 256);
                 key.Write(cipherKey);
-                encoded += (cipherKey);
+                encoded += (char)((int)cipherKey[i] + (int)(message[i]));
             }
+            Console.WriteLine(message.Length);
             key.Close();
 
             encodedText.WriteLine(encoded);
@@ -74,7 +75,9 @@ namespace VernamCipher
 
             for (int i = 0; i < encoded.Length - 1; i++)
             {
-                decoded += (encoded[i] - key[i]);
+                //decoded += (char)((int)encoded[i] - (int)key[i]);
+                Console.WriteLine(encoded.Length);
+                Console.WriteLine(key.Length);
             }
 
             decodedText.WriteLine(decoded);
