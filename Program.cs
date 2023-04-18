@@ -42,8 +42,8 @@ namespace VernamCipher
             StreamReader plainText = new StreamReader(textfile);
             StreamWriter encodedText = new StreamWriter("EncodedText.txt");
             StreamWriter key = new StreamWriter("Key.txt");
-            key.AutoFlush = true;
             encodedText.AutoFlush = true;
+            key.AutoFlush = true;
 
             string message = plainText.ReadToEnd();
             string encoded = "";
@@ -67,6 +67,7 @@ namespace VernamCipher
             StreamReader keyText = new StreamReader(keyFile);
             StreamWriter decodedText = new StreamWriter("DecodedText.txt");
             decodedText.AutoFlush = true;
+
 
             string encoded = encodedText.ReadToEnd();
             string key = keyText.ReadToEnd();
