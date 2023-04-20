@@ -57,9 +57,9 @@ namespace VernamCipher
             {
                 rnd = GetRandomNumber(0, 256);
                 cipherKey += (char)rnd;
-                key.Write(cipherKey);
                 encoded += (char)((int)message[i] ^ rnd);
             }
+            key.Write(cipherKey);
             key.Close();
 
             encodedText.WriteLine(encoded);
@@ -68,15 +68,15 @@ namespace VernamCipher
 
         private static void Decode(string textFile, string keyFile, string plainFile)
         {
-            StreamReader plainText = new StreamReader(plainFile);
             StreamReader encodedText = new StreamReader(textFile);
             StreamReader keyText = new StreamReader(keyFile);
+            StreamReader plainText = new StreamReader(plainFile);
             StreamWriter decodedText = new StreamWriter("DecodedText.txt");
             decodedText.AutoFlush = true;
 
-            string message = plainText.ReadToEnd();
             string encoded = encodedText.ReadToEnd();
             string key = keyText.ReadToEnd();
+            string message = plainText.ReadToEnd();
             string decoded = "";
 
             for (int i = 0; i < message.Length; i++)
