@@ -29,9 +29,6 @@ namespace VernamCipher
                         inputFile = (Console.ReadLine()!) + ".txt";
                         Decode(inputFile, keyFile, plainFile);
                         break;
-                    case 'B':
-                        Bean();
-                        break;
                     default:
                         Console.WriteLine("Not a valid choice.");
                         break;
@@ -86,41 +83,6 @@ namespace VernamCipher
 
             decodedText.WriteLine(decoded);
             decodedText.Close();
-        }
-
-        private static void Bean()
-        {
-            Random Rnd = new Random();
-            StreamReader inputfile = new StreamReader("PlainText.txt");
-            StreamWriter cipherfile = new StreamWriter("cipher.txt");
-            StreamWriter keyfile = new StreamWriter("key.txt");
-            string message = inputfile.ReadToEnd();
-            string encoded = "";
-            string key = "";
-            string decoded = "";
-            int randomthing;
-            int code = 0;
-            for (int i = 0; i < message.Length; i++)
-            {
-                randomthing = Rnd.Next(0, 256);
-                key += (char)randomthing;
-                code = (int)message[i] ^ randomthing;
-                encoded += ((char)code);
-            }
-            keyfile.Write(key);
-            keyfile.Flush();
-            keyfile.Close();
-            cipherfile.Write(encoded);
-            cipherfile.Flush();
-            cipherfile.Close();
-            Console.WriteLine("The original message: {0}", message);
-            Console.WriteLine("The message after encryption: {0}", encoded);
-            Console.WriteLine("The key used: {0}", key);
-            for (int i = 0; i < message.Length; i++)
-            {
-                decoded += (char)((int)encoded[i] ^ (int)key[i]);
-            }
-            Console.WriteLine("The encrypted text decypted using the saved key: {0}", decoded);
         }
 
         private static int GetRandomNumber(int lowerLimitValue, int upperLimitValue)
