@@ -8,7 +8,7 @@ namespace VernamCipher
 
         static void Main()
         {
-            string inputFile = "", choice = "", keyFile = "Key.txt";
+            string inputFile = "", choice = "", keyFile = "Key.txt", plainFile = "PlainText.txt";
             bool valid = false;
 
             while (!valid)
@@ -27,7 +27,7 @@ namespace VernamCipher
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
                         inputFile = (Console.ReadLine()!) + ".txt";
-                        Decode(inputFile, keyFile);
+                        Decode(inputFile, keyFile, plainFile);
                         break;
                     default:
                         Console.WriteLine("Not a valid choice.");
@@ -53,7 +53,7 @@ namespace VernamCipher
             {
                 cipherKey += (char)GetRandomNumber(0, 256);
                 key.Write(cipherKey);
-                encoded += (char)((int)cipherKey[i] + (int)(message[i]));
+                encoded += (char)((int)(message[i]) + (int)cipherKey[i]);
             }
             key.Close();
 
@@ -61,18 +61,20 @@ namespace VernamCipher
             encodedText.Close();
         }
 
-        private static void Decode(string textFile, string keyFile)
+        private static void Decode(string textFile, string keyFile, string plainFile)
         {
+            StreamReader plainText = new StreamReader(plainFile);
             StreamReader encodedText = new StreamReader(textFile);
             StreamReader keyText = new StreamReader(keyFile);
             StreamWriter decodedText = new StreamWriter("DecodedText.txt");
             decodedText.AutoFlush = true;
 
+            string message = plainText.ReadToEnd();
             string encoded = encodedText.ReadToEnd();
             string key = keyText.ReadToEnd();
             string decoded = "";
 
-            for (int i = 0; i < encoded.Length - 1; i++)
+            for (int i = 0; i < message.Length; i++)
             {
                 decoded += (char)((int)encoded[i] - (int)key[i]);
             }
