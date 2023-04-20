@@ -68,7 +68,6 @@ namespace VernamCipher
             StreamWriter decodedText = new StreamWriter("DecodedText.txt");
             decodedText.AutoFlush = true;
 
-
             string encoded = encodedText.ReadToEnd();
             string key = keyText.ReadToEnd();
             string decoded = "";
