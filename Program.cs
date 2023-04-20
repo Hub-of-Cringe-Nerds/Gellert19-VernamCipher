@@ -34,7 +34,6 @@ namespace VernamCipher
                         break;
                 }
             }
-
         }
 
         private static void Encode(string textfile)
