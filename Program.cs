@@ -5,10 +5,13 @@ namespace VernamCipher
     class Program
     {
         static Random Cipher = new Random();
+        static string keyFile = "Key.txt";
+        static string encodedFile = "EncodedText.txt";
+        static string decodedFile = "DecodedText.txt";
 
         static void Main()
         {
-            string inputFile = "", choice = "", keyFile = "Key.txt", plainFile = "PlainText.txt";
+            string inputFile = "", choice = "", plainFile = "";
             bool valid = false;
 
             while (!valid)
@@ -27,7 +30,8 @@ namespace VernamCipher
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
                         inputFile = (Console.ReadLine()!) + ".txt";
-                        Decode(inputFile, keyFile, plainFile);
+                        plainFile = inputFile;
+                        Decode(inputFile, plainFile);
                         break;
                     default:
                         Console.WriteLine("Not a valid choice.");
@@ -36,11 +40,11 @@ namespace VernamCipher
             }
         }
 
-        private static void Encode(string textfile)
+        private static void Encode(string inputFile)
         {
-            StreamReader plainText = new StreamReader(textfile);
-            StreamWriter encodedText = new StreamWriter("EncodedText.txt");
-            StreamWriter key = new StreamWriter("Key.txt");
+            StreamReader plainText = new StreamReader(inputFile);
+            StreamWriter encodedText = new StreamWriter(encodedFile);
+            StreamWriter key = new StreamWriter(keyFile);
             encodedText.AutoFlush = true;
             key.AutoFlush = true;
 
@@ -62,12 +66,12 @@ namespace VernamCipher
             encodedText.Close();
         }
 
-        private static void Decode(string textFile, string keyFile, string plainFile)
+        private static void Decode(string inputFile, string plainFile)
         {
-            StreamReader encodedText = new StreamReader(textFile);
+            StreamReader encodedText = new StreamReader(inputFile);
             StreamReader keyText = new StreamReader(keyFile);
             StreamReader plainText = new StreamReader(plainFile);
-            StreamWriter decodedText = new StreamWriter("DecodedText.txt");
+            StreamWriter decodedText = new StreamWriter(decodedFile);
             decodedText.AutoFlush = true;
 
             string encoded = encodedText.ReadToEnd();
@@ -88,6 +92,5 @@ namespace VernamCipher
         {
             return Cipher.Next(lowerLimitValue, upperLimitValue);
         }
-
     }
 }
