@@ -59,6 +59,7 @@ namespace VernamCipher
                 cipherKey += (char)rnd;
                 encoded += (char)((int)message[i] ^ rnd);
             }
+
             key.Write(cipherKey);
             key.Close();
 
