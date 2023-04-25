@@ -1,15 +1,42 @@
 ﻿using System.IO;
+using System.Drawing;
 
 namespace VernamCipher
 {
     class Program
     {
         static Random Cipher = new Random();
-        static string keyFile = "Key.txt";
-        static string encodedFile = "EncodedText.txt";
-        static string decodedFile = "DecodedText.txt";
+        const string keyFile = "Key.txt";
+        const string encodedFile = "EncodedText.txt";
+        const string decodedFile = "DecodedText.txt";
 
         static void Main()
+        {
+            string choice = "";
+            bool valid = false;
+
+            while (!valid)
+            {
+                Console.Write("What do you wish to encode a Text file (T) or an Image file (I): ");
+                choice = Console.ReadLine()!;
+                choice = choice.ToUpper();
+
+                switch (choice[0])
+                {
+                    case 'T':
+                        Text();
+                        break;
+                    case 'I':
+                        Image();
+                        break;
+                    default:
+                        Console.WriteLine("Not a valid choice.");
+                        break;
+                }
+            }
+        }
+
+        static void Text()
         {
             string inputFile = "", choice = "", plainFile = "";
             bool valid = false;
@@ -25,13 +52,13 @@ namespace VernamCipher
                     case 'E':
                         Console.Write("Please enter the name of the file that you wish to encode: ");
                         inputFile = (Console.ReadLine()!) + ".txt";
-                        Encode(inputFile);
+                        TEncode(inputFile);
                         break;
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
                         inputFile = (Console.ReadLine()!) + ".txt";
                         plainFile = inputFile;
-                        Decode(inputFile, plainFile);
+                        TDecode(inputFile, plainFile);
                         break;
                     default:
                         Console.WriteLine("Not a valid choice.");
@@ -40,7 +67,7 @@ namespace VernamCipher
             }
         }
 
-        private static void Encode(string inputFile)
+        private static void TEncode(string inputFile)
         {
             StreamReader plainText = new StreamReader(inputFile);
             StreamWriter encodedText = new StreamWriter(encodedFile);
@@ -67,7 +94,7 @@ namespace VernamCipher
             encodedText.Close();
         }
 
-        private static void Decode(string inputFile, string plainFile)
+        private static void TDecode(string inputFile, string plainFile)
         {
             StreamReader encodedText = new StreamReader(inputFile);
             StreamReader keyText = new StreamReader(keyFile);
@@ -87,6 +114,47 @@ namespace VernamCipher
 
             decodedText.WriteLine(decoded);
             decodedText.Close();
+        }
+
+        static void Image()
+        {
+            string inputFile = "", choice = "", plainFile = "";
+            bool valid = false;
+
+            while (!valid)
+            {
+                Console.Write("Do you wish to encode (E) a image file or decode (D): ");
+                choice = Console.ReadLine()!;
+                choice = choice.ToUpper();
+
+                switch (choice[0])
+                {
+                    case 'E':
+                        Console.Write("Please enter the name of the file that you wish to encode: ");
+                        inputFile = (Console.ReadLine()!) + ".png";
+                        IEncode(inputFile);
+                        break;
+                    case 'D':
+                        Console.Write("Please enter the name of the file that you wish to decode: ");
+                        inputFile = (Console.ReadLine()!) + ".png";
+                        plainFile = inputFile;
+                        IDecode(inputFile, plainFile);
+                        break;
+                    default:
+                        Console.WriteLine("Not a valid choice.");
+                        break;
+                }
+            }
+        }
+
+        static void IEncode(string inputFile)
+        {
+
+        }
+
+        static void IDecode(string inputFile, string plainFile)
+        {
+
         }
 
         private static int GetRandomNumber(int lowerLimitValue, int upperLimitValue)
