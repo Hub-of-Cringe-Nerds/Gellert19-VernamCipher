@@ -6,12 +6,12 @@ namespace VernamCipher
     class Program
     {
         static Random Cipher = new Random();
-        const string keyTextFile = "Key.txt";
-        const string encodedTextFile = "EncodedText.txt";
-        const string decodedTextFile = "DecodedText.txt";
-        const string keyImageFile = "Key.png";
-        const string encodedImageFile = "EncodedText.png";
-        const string decodedImageFile = "DecodedText.png";
+        const string keyTextFile = "Text/Key.txt";
+        const string encodedTextFile = "Text/EncodedText.txt";
+        const string decodedTextFile = "Text/DecodedText.txt";
+        const string keyImageFile = "Image/Key.png";
+        const string encodedImageFile = "Image/EncodedText.png";
+        const string decodedImageFile = "Image/DecodedText.png";
 
         static void Main()
         {
@@ -20,7 +20,7 @@ namespace VernamCipher
 
             while (!valid)
             {
-                Console.Write("What do you wish to encode a Text file (T) or an Image file (I): ");
+                Console.Write("Do you wish to encode a Text file (T) or an Image file (I): ");
                 choice = Console.ReadLine()!;
                 choice = choice.ToUpper();
 
@@ -41,7 +41,7 @@ namespace VernamCipher
 
         static void Text()
         {
-            string inputFile = "", choice = "", plainFile = "";
+            string inputFile = "Text/", choice = "", plainFile = "";
             bool valid = false;
 
             while (!valid)
@@ -54,12 +54,12 @@ namespace VernamCipher
                 {
                     case 'E':
                         Console.Write("Please enter the name of the file that you wish to encode: ");
-                        inputFile = (Console.ReadLine()!) + ".txt";
+                        inputFile += (Console.ReadLine()!) + ".txt";
                         TEncode(inputFile);
                         break;
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
-                        inputFile = (Console.ReadLine()!) + ".txt";
+                        inputFile += (Console.ReadLine()!) + ".txt";
                         plainFile = inputFile;
                         TDecode(inputFile, plainFile);
                         break;
@@ -121,7 +121,7 @@ namespace VernamCipher
 
         static void Image()
         {
-            string inputFile = "", choice = "", plainFile = "";
+            string inputFile = "Image/", choice = "", plainFile = "";
             bool valid = false;
 
             while (!valid)
@@ -134,12 +134,12 @@ namespace VernamCipher
                 {
                     case 'E':
                         Console.Write("Please enter the name of the file that you wish to encode: ");
-                        inputFile = (Console.ReadLine()!) + ".png";
+                        inputFile += (Console.ReadLine()!) + ".png";
                         IEncode(inputFile);
                         break;
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
-                        inputFile = (Console.ReadLine()!) + ".png";
+                        inputFile += (Console.ReadLine()!) + ".png";
                         plainFile = inputFile;
                         IDecode(inputFile, plainFile);
                         break;
@@ -152,7 +152,7 @@ namespace VernamCipher
 
         static void IEncode(string inputFile)
         {
-
+            
         }
 
         static void IDecode(string inputFile, string plainFile)
