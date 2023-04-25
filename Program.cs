@@ -6,9 +6,12 @@ namespace VernamCipher
     class Program
     {
         static Random Cipher = new Random();
-        const string keyFile = "Key.txt";
-        const string encodedFile = "EncodedText.txt";
-        const string decodedFile = "DecodedText.txt";
+        const string keyTextFile = "Key.txt";
+        const string encodedTextFile = "EncodedText.txt";
+        const string decodedTextFile = "DecodedText.txt";
+        const string keyImageFile = "Key.png";
+        const string encodedImageFile = "EncodedText.png";
+        const string decodedImageFile = "DecodedText.png";
 
         static void Main()
         {
@@ -70,8 +73,8 @@ namespace VernamCipher
         private static void TEncode(string inputFile)
         {
             StreamReader plainText = new StreamReader(inputFile);
-            StreamWriter encodedText = new StreamWriter(encodedFile);
-            StreamWriter key = new StreamWriter(keyFile);
+            StreamWriter encodedText = new StreamWriter(encodedTextFile);
+            StreamWriter key = new StreamWriter(keyTextFile);
             encodedText.AutoFlush = true;
             key.AutoFlush = true;
 
@@ -97,9 +100,9 @@ namespace VernamCipher
         private static void TDecode(string inputFile, string plainFile)
         {
             StreamReader encodedText = new StreamReader(inputFile);
-            StreamReader keyText = new StreamReader(keyFile);
+            StreamReader keyText = new StreamReader(keyTextFile);
             StreamReader plainText = new StreamReader(plainFile);
-            StreamWriter decodedText = new StreamWriter(decodedFile);
+            StreamWriter decodedText = new StreamWriter(decodedTextFile);
             decodedText.AutoFlush = true;
 
             string encoded = encodedText.ReadToEnd();
