@@ -1,5 +1,6 @@
 ﻿using System.IO;
-using System.Drawing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace VernamCipher
 {
@@ -17,6 +18,8 @@ namespace VernamCipher
         {
             string choice = "";
             bool valid = false;
+
+            Console.WriteLine("If you wish to return to this choice enter (Q) at any time.");
 
             while (!valid)
             {
@@ -55,14 +58,16 @@ namespace VernamCipher
                     case 'E':
                         Console.Write("Please enter the name of the file that you wish to encode: ");
                         inputFile += (Console.ReadLine()!) + ".txt";
-                        TEncode(inputFile);
+                        TextEncode(inputFile);
                         break;
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
                         inputFile += (Console.ReadLine()!) + ".txt";
                         plainFile = inputFile;
-                        TDecode(inputFile, plainFile);
+                        TextDecode(inputFile, plainFile);
                         break;
+                    case 'Q':
+                        return;
                     default:
                         Console.WriteLine("Not a valid choice.");
                         break;
@@ -70,7 +75,7 @@ namespace VernamCipher
             }
         }
 
-        private static void TEncode(string inputFile)
+        private static void TextEncode(string inputFile)
         {
             StreamReader plainText = new StreamReader(inputFile);
             StreamWriter encodedText = new StreamWriter(encodedTextFile);
@@ -97,7 +102,7 @@ namespace VernamCipher
             encodedText.Close();
         }
 
-        private static void TDecode(string inputFile, string plainFile)
+        private static void TextDecode(string inputFile, string plainFile)
         {
             StreamReader encodedText = new StreamReader(inputFile);
             StreamReader keyText = new StreamReader(keyTextFile);
@@ -135,14 +140,16 @@ namespace VernamCipher
                     case 'E':
                         Console.Write("Please enter the name of the file that you wish to encode: ");
                         inputFile += (Console.ReadLine()!) + ".png";
-                        IEncode(inputFile);
+                        ImageEncode(inputFile);
                         break;
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
                         inputFile += (Console.ReadLine()!) + ".png";
                         plainFile = inputFile;
-                        IDecode(inputFile, plainFile);
+                        ImageDecode(inputFile, plainFile);
                         break;
+                    case 'Q':
+                        return;
                     default:
                         Console.WriteLine("Not a valid choice.");
                         break;
@@ -150,12 +157,15 @@ namespace VernamCipher
             }
         }
 
-        static void IEncode(string inputFile)
+        static void ImageEncode(string inputFile)
         {
-            
+            var plainImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
+            var encodedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
+
+
         }
 
-        static void IDecode(string inputFile, string plainFile)
+        static void ImageDecode(string inputFile, string plainFile)
         {
 
         }
