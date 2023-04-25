@@ -160,14 +160,15 @@ namespace VernamCipher
         static void ImageEncode(string inputFile)
         {
             var plainImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
-            var encodedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
+            var encodedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(encodedImageFile);
 
 
         }
 
         static void ImageDecode(string inputFile, string plainFile)
         {
-
+            var encodedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
+            var plainImage = SixLabors.ImageSharp.Image.Load<Rgba32>(plainFile);
         }
 
         private static int GetRandomNumber(int lowerLimitValue, int upperLimitValue)
