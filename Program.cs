@@ -160,15 +160,53 @@ namespace VernamCipher
         static void ImageEncode(string inputFile)
         {
             var plainImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
-            var encodedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(encodedImageFile);
+            StreamWriter keyText = new StreamWriter(keyImageFile);
 
+            for (int y = 0; y < plainImage.Height; y++)
+            {
+                for (int x = 0; x < plainImage.Width; x++)
+                {
+                    int red = GetRandomNumber(0, 256);
+                    int green = GetRandomNumber(0, 256);
+                    int blue = GetRandomNumber(0, 256);
 
+                    int r = plainImage[x, y].R;
+                    int b = plainImage[x, y].B;
+                    int g = plainImage[x, y].G;
+
+                    keyText.Write(red);
+                    keyText.Write(green);
+                    keyText.Write(blue);
+
+                    plainImage[x, y] = Color.FromRgb((byte)(r ^ red), (byte)(g ^ green), (byte)(b ^ blue));
+                    
+                }
+            }
+
+            plainImage.SaveAsBmp(encodedImageFile);
         }
 
-        static void ImageDecode(string inputFile, string plainFile)
+        static void ImageDecode(string inputFile, string keyImageFile)
         {
+            StreamReader keyImage = new StreamReader(keyImageFile);
+            string key = keyImage.ReadToEnd();
             var encodedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
-            var plainImage = SixLabors.ImageSharp.Image.Load<Rgba32>(plainFile);
+            var keyIndex = 0;
+
+            for (int y = 0; y < encodedImage.Height; y++)
+            {
+                for (int x = 0; x < encodedImage.Width; x++)
+                {
+                    int r = encodedImage[x, y].R;
+                    int b = encodedImage[x, y].B;
+                    int g = encodedImage[x, y].G;
+
+                    encodedImage[x, y] = Color.FromRgb((byte)(r ^ key[keyIndex]), (byte)(g ^ key[keyIndex]), (byte)(b ^ key[keyIndex]));
+
+                    keyIndex++;
+                }
+            }
+            encodedImage.SaveAsBmp(decodedImageFile);
         }
 
         private static int GetRandomNumber(int lowerLimitValue, int upperLimitValue)
