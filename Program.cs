@@ -10,9 +10,9 @@ namespace VernamCipher
         const string keyTextFile = "Text/Key.txt";
         const string encodedTextFile = "Text/EncodedText.txt";
         const string decodedTextFile = "Text/DecodedText.txt";
-        const string keyImageFile = "Image/Key.png";
-        const string encodedImageFile = "Image/EncodedText.png";
-        const string decodedImageFile = "Image/DecodedText.png";
+        const string keyImageFile = "Image/Key.txt";
+        const string encodedImageFile = "Image/EncodedImage.png";
+        const string decodedImageFile = "Image/DecodedImage.png";
 
         static void Main()
         {
@@ -49,6 +49,7 @@ namespace VernamCipher
 
             while (!valid)
             {
+                inputFile = "Text/";
                 Console.Write("Do you wish to encode (E) a text file or decode (D): ");
                 choice = Console.ReadLine()!;
                 choice = choice.ToUpper();
@@ -126,11 +127,12 @@ namespace VernamCipher
 
         static void Image()
         {
-            string inputFile = "Image/", choice = "", plainFile = "";
+            string inputFile = "Image/", choice = "";
             bool valid = false;
 
             while (!valid)
             {
+                inputFile = "Image/";
                 Console.Write("Do you wish to encode (E) a image file or decode (D): ");
                 choice = Console.ReadLine()!;
                 choice = choice.ToUpper();
@@ -145,8 +147,7 @@ namespace VernamCipher
                     case 'D':
                         Console.Write("Please enter the name of the file that you wish to decode: ");
                         inputFile += (Console.ReadLine()!) + ".png";
-                        plainFile = inputFile;
-                        ImageDecode(inputFile, plainFile);
+                        ImageDecode(inputFile, keyImageFile);
                         break;
                     case 'Q':
                         return;
@@ -174,9 +175,9 @@ namespace VernamCipher
                     int b = plainImage[x, y].B;
                     int g = plainImage[x, y].G;
 
-                    keyText.Write(red);
-                    keyText.Write(green);
-                    keyText.Write(blue);
+                    keyText.Write((char)red);
+                    keyText.Write((char)green);
+                    keyText.Write((char)blue);
 
                     plainImage[x, y] = Color.FromRgb((byte)(r ^ red), (byte)(g ^ green), (byte)(b ^ blue));
                     
