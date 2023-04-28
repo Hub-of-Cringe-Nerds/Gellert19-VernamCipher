@@ -179,11 +179,13 @@ namespace VernamCipher
                     keyText.Write((char)green);
                     keyText.Write((char)blue);
 
+
                     plainImage[x, y] = Color.FromRgb((byte)(r ^ red), (byte)(g ^ green), (byte)(b ^ blue));
                     
                 }
             }
 
+            keyText.Close();
             plainImage.SaveAsBmp(encodedImageFile);
         }
 
@@ -202,7 +204,7 @@ namespace VernamCipher
                     int b = encodedImage[x, y].B;
                     int g = encodedImage[x, y].G;
 
-                    encodedImage[x, y] = Color.FromRgb((byte)(r ^ key[keyIndex]), (byte)(g ^ key[keyIndex]), (byte)(b ^ key[keyIndex]));
+                    encodedImage[x, y] = Color.FromRgb((byte)(r ^ (int)(key[keyIndex])), (byte)(g ^ (int)(key[keyIndex])), (byte)(b ^ (int)(key[keyIndex])));
 
                     keyIndex++;
                 }
