@@ -10,7 +10,7 @@ namespace VernamCipher
         const string keyTextFile = "Text/Key.txt";
         const string encodedTextFile = "Text/EncodedText.txt";
         const string decodedTextFile = "Text/DecodedText.txt";
-        const string keyImageFile = "Image/Key.txt";
+        const string keyImageFile = "Image/Key.png";
         const string encodedImageFile = "Image/EncodedImage.png";
         const string decodedImageFile = "Image/DecodedImage.png";
 
@@ -161,7 +161,8 @@ namespace VernamCipher
         static void ImageEncode(string inputFile)
         {
             var plainImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
-            StreamWriter keyText = new StreamWriter(keyImageFile);
+            var keyedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
+
 
             for (int y = 0; y < plainImage.Height; y++)
             {
@@ -175,25 +176,21 @@ namespace VernamCipher
                     int b = plainImage[x, y].B;
                     int g = plainImage[x, y].G;
 
-                    keyText.Write((char)red);
-                    keyText.Write((char)green);
-                    keyText.Write((char)blue);
-
-
+                    keyedImage[x, y] = Color.FromRgb((byte)red, (byte)green, (byte)blue);
                     plainImage[x, y] = Color.FromRgb((byte)(r ^ red), (byte)(g ^ green), (byte)(b ^ blue));
                     
                 }
             }
 
-            keyText.Close();
+            keyedImage.SaveAsBmp(keyImageFile);
             plainImage.SaveAsBmp(encodedImageFile);
+
         }
 
         static void ImageDecode(string inputFile, string keyImageFile)
         {
-            StreamReader keyImage = new StreamReader(keyImageFile);
-            string key = keyImage.ReadToEnd();
             var encodedImage = SixLabors.ImageSharp.Image.Load<Rgba32>(inputFile);
+            var keyImage = SixLabors.ImageSharp.Image.Load<Rgba32>(keyImageFile);
             var keyIndex = 0;
 
             for (int y = 0; y < encodedImage.Height; y++)
@@ -201,14 +198,19 @@ namespace VernamCipher
                 for (int x = 0; x < encodedImage.Width; x++)
                 {
                     int r = encodedImage[x, y].R;
-                    int b = encodedImage[x, y].B;
                     int g = encodedImage[x, y].G;
+                    int b = encodedImage[x, y].B;
 
-                    encodedImage[x, y] = Color.FromRgb((byte)(r ^ (int)(key[keyIndex])), (byte)(g ^ (int)(key[keyIndex])), (byte)(b ^ (int)(key[keyIndex])));
+                    int red = keyImage[x, y].R;
+                    int green = keyImage[x, y].G;
+                    int blue = keyImage[x, y].B;
+
+                    encodedImage[x, y] = Color.FromRgb((byte)(r ^ red), (byte)(g ^ green), (byte)(b ^ blue));
 
                     keyIndex++;
                 }
             }
+            
             encodedImage.SaveAsBmp(decodedImageFile);
         }
 
