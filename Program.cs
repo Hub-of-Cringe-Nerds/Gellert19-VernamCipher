@@ -35,6 +35,8 @@ namespace VernamCipher
                     case 'I':
                         Image();
                         break;
+                    case 'Q':
+                        return;
                     default:
                         Console.WriteLine("Not a valid choice.");
                         break;
