@@ -91,7 +91,7 @@ namespace VernamCipher
             string cipherKey = "";
             int rnd = 0;
 
-            for (int i = 0; i < message.Length; i++)
+            for (int i = 0; i < message.Length - 1; i++)
             {
                 rnd = GetRandomNumber(0, 256);
                 cipherKey += (char)rnd;
@@ -118,7 +118,7 @@ namespace VernamCipher
             string message = plainText.ReadToEnd();
             string decoded = "";
 
-            for (int i = 0; i < message.Length; i++)
+            for (int i = 0; i < message.Length - 1; i++)
             {
                 decoded += (char)((int)encoded[i] ^ (int)key[i]);
             }
